@@ -1,5 +1,7 @@
 from enum import Enum
 
+# TextNode represents the various types of inline text that can exist in HTML and Markdown.
+
 class TextType(Enum):
     TEXT = "text"
     BOLD = "bold"
@@ -9,7 +11,7 @@ class TextType(Enum):
     IMAGE = "image"
 
 
-class TextNode():
+class TextNode:
     def __init__(self, text, text_type, url=None):
         self.text = text
         self.text_type = text_type
