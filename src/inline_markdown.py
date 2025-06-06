@@ -1,6 +1,16 @@
 from textnode import TextType, TextNode
 import re
 
+def text_to_textnodes(text):
+    nodes = [TextNode(text, TextType.TEXT)]
+    nodes = split_nodes_delimiter(nodes, "**", TextType.BOLD)
+    nodes = split_nodes_delimiter(nodes, "_", TextType.ITALIC)
+    nodes = split_nodes_delimiter(nodes, "`", TextType.CODE)
+    nodes = split_nodes_image(nodes)
+    nodes = split_nodes_link(nodes)
+    return nodes
+
+
 def split_nodes_delimiter(old_nodes, delimiter, text_type):
     new_nodes = []
     for node in old_nodes:
@@ -113,8 +123,3 @@ def split_nodes_link(old_nodes):
                     link_count = -1 # exit loop
         new_nodes.extend(node_list_sections)
     return new_nodes
-
-
-
-node = TextNode("This is text with an ![image](https://i.imgur.com/zjjcJKZ.png) and another", TextType.TEXT)
-print (split_nodes_image([node]))
