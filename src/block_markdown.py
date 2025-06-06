@@ -12,7 +12,7 @@ class BlockType(Enum):
 def block_to_block_type(block):
     if bool(re.fullmatch(r"^#{1,6} .*", block)):
         return BlockType.HEADING
-    if bool(re.fullmatch(r"`{3}\n*.*?\n*`{3}", block)):
+    if starts_with(block, "```"):
         return BlockType.CODE
     if starts_with(block, ">"):
         return BlockType.QUOTE
@@ -25,6 +25,9 @@ def block_to_block_type(block):
     
 def starts_with(block, delimiter):
     lines = block.split("\n")
+    if delimiter == "```":
+        if len(lines) > 1 and lines[0].startswith("```") and lines[-1].startswith("```"):
+            return True
     for line in lines:
         if isinstance(delimiter, int):
              if not line.startswith(f"{delimiter}. "):
