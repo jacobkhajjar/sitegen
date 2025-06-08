@@ -3,7 +3,11 @@ import os, shutil, pathlib, sys
 from copy_static import copy_dir
 from generate_pages import generate_page, generate_pages_recursive
 
-basepath = sys.argv[0]
+if len(sys.argv) >= 2:
+    basepath = sys.argv[1]
+else:
+    basepath = "/"
+
 path_static = pathlib.Path("./static")
 path_public = pathlib.Path("./docs")
 path_content = pathlib.Path("./content")
@@ -23,7 +27,6 @@ def main():
     print("(~~~~ GENERATING PAGES ~~~~)")
     generate_pages_recursive(path_content, path_template, path_public, basepath)
 
-    print("(~~~~ PUSHING TO SERVER PORT 8888 ~~~~)")
-    print(f"basepath: {basepath}")
+    print(f"\n::READY FOR UPLOAD::\nbasepath: {basepath}")
     
 main()
